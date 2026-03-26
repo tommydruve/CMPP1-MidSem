@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMPP1 — Mid-Semester Exam Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --parchment: #f0ead8;
+    --ink: #1a1208;
+    --ink-light: #3d3320;
+    --brown: #5c4a2a;
+    --brown-light: #8a7050;
+    --rust: #8b4513;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --border: #c8b89a;
+    --border-light: #ddd0b8;
+    --tab-active: #2c1f0e;
+    --highlight: #f5e6c8;
+    --red-note: #8b1a1a;
+    --blue-note: #1a3a5c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--tab-active);
+    border-bottom: 3px solid var(--gold);
+    padding: 28px 40px 22px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+  }
+  header p.subtitle {
+    font-size: 0.82rem;
+    color: #a89878;
+    font-style: italic;
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    background: #231808;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 20px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #9a8870;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    padding: 14px 18px 11px;
+    text-transform: uppercase;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    border-bottom-color: var(--gold);
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  /* ── CONTENT PANELS ── */
+  .panel { display: none; padding: 50px 60px 80px; max-width: 900px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+    margin-bottom: 32px;
+    margin-top: 0;
+  }
+  .section-title span {
+    display: block;
+    font-size: 0.75rem;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--brown-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--rust);
+    margin: 40px 0 14px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold);
+  }
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--blue-note);
+    margin: 28px 0 10px;
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-light); }
+
+  ul, ol {
+    padding-left: 0;
+    margin-bottom: 18px;
+    list-style: none;
+  }
+  li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 9px;
+    color: var(--ink-light);
+    line-height: 1.7;
+  }
+  ul > li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.55em;
+    top: 0.55em;
+  }
+  ol { counter-reset: item; }
+  ol > li { counter-increment: item; }
+  ol > li::before {
+    content: counter(item) '.';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  /* nested bullets */
+  li ul { margin-top: 8px; margin-bottom: 4px; }
+  li ul > li::before { content: '–'; color: var(--brown-light); font-size: 0.95em; top: 0; }
+
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--brown); }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 22px 0;
+    border-left: 4px solid;
+    font-size: 0.93rem;
+  }
+  .callout.law {
+    background: #f5ede0;
+    border-color: var(--rust);
+  }
+  .callout.important {
+    background: #fdf3e3;
+    border-color: var(--gold);
+  }
+  .callout.warning {
+    background: #fdf0f0;
+    border-color: var(--red-note);
+  }
+  .callout.note {
+    background: #eef3fa;
+    border-color: var(--blue-note);
+  }
+  .callout-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .callout.law .callout-title { color: var(--rust); }
+  .callout.important .callout-title { color: var(--gold); }
+  .callout.warning .callout-title { color: var(--red-note); }
+  .callout.note .callout-title { color: var(--blue-note); }
+
+  /* ── DEFINITION BOXES ── */
+  .def-box {
+    background: var(--highlight);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 18px 0;
+  }
+  .def-box .def-term {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .def-box p { margin: 0; font-size: 0.93rem; }
+
+  /* ── HIERARCHY DIAGRAM ── */
+  .hierarchy {
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin: 22px 0;
+    text-align: center;
+  }
+  .hier-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 18px;
+  }
+  .hier-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0;
+    flex-wrap: wrap;
+  }
+  .hier-box {
+    background: var(--tab-active);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 3px;
+    letter-spacing: 0.03em;
+  }
+  .hier-box.light {
+    background: var(--brown);
+    color: #fdf0d8;
+  }
+  .hier-box.pale {
+    background: var(--border);
+    color: var(--ink);
+  }
+  .hier-arrow {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .hier-connector { color: var(--brown-light); font-size: 0.75rem; }
+
+  /* ── NUMBERED ELEMENTS LIST ── */
+  .elements-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .element-card {
+    background: var(--parchment);
+    border: 1px solid var(--border-light);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .element-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .element-card .label {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.92rem;
+    margin-bottom: 4px;
+  }
+  .element-card p { margin: 0; font-size: 0.86rem; color: var(--brown); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 36px 0;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.88rem;
+  }
+  th {
+    background: var(--tab-active);
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--ink-light);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--parchment); }
+
+  /* ── QUOTE ── */
+  blockquote {
+    border-left: 4px solid var(--gold);
+    background: var(--highlight);
+    padding: 14px 20px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--brown);
+    font-size: 0.95rem;
+  }
+
+  /* ── FOOTNOTE / STATUTORY TEXT ── */
+  .statute {
+    background: #f8f5ee;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    font-size: 0.87rem;
+    color: var(--ink-light);
+    margin: 18px 0;
+    font-style: italic;
+  }
+
+  /* ── PILL TAGS ── */
+  .tag {
+    display: inline-block;
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    color: var(--brown);
+    margin: 2px 3px 2px 0;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── SCROLL & RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .panel { padding: 30px 20px 60px; }
+    .elements-grid { grid-template-columns: 1fr; }
+    header { padding: 18px 20px 14px; }
+    header h1 { font-size: 1.2rem; }
+    .tab-btn { padding: 12px 12px 9px; font-size: 0.72rem; }
+  }
+
+  /* progress bar */
+  .progress-bar {
+    height: 3px;
+    background: var(--gold);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    z-index: 999;
+    transition: width 0.1s;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<header>
+  <h1>CMPP1 — Mid-Semester Exam Notes</h1>
+  <p class="subtitle">Clinical Medicine, Policy &amp; Practice · Comprehensive Study Reference</p>
+</header>
+
+<nav class="tab-bar" role="tablist">
+  <button class="tab-btn active" onclick="showTab('tab1')" role="tab">Intro to Law &amp; Policy</button>
+  <button class="tab-btn" onclick="showTab('tab2')" role="tab">Human Rights Law</button>
+  <button class="tab-btn" onclick="showTab('tab3')" role="tab">Professionalism &amp; Ethics</button>
+  <button class="tab-btn" onclick="showTab('tab4')" role="tab">Adult Capacity</button>
+  <button class="tab-btn" onclick="showTab('tab5')" role="tab">Child Capacity</button>
+  <button class="tab-btn" onclick="showTab('tab6')" role="tab">Confidentiality &amp; Privacy</button>
+  <button class="tab-btn" onclick="showTab('tab7')" role="tab">Negligence</button>
+  <button class="tab-btn" onclick="showTab('tab8')" role="tab">Patient Safety</button>
+  <button class="tab-btn" onclick="showTab('tab9')" role="tab">Termination of Pregnancy</button>
+  <button class="tab-btn exam-tab-btn" onclick="showTab('tabExam')" role="tab">📋 Exam Prep</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 1: INTRO TO LAW AND POLICY
+═══════════════════════════════════════════════════════════ -->
+<section id="tab1" class="panel active" role="tabpanel">
+  <h1 class="section-title"><span>Section 1</span>Intro to Law &amp; Policy</h1>
+
+  <h2>Sources of Law</h2>
+  <ul>
+    <li>There are <strong>2 main sources of law</strong>: <strong>Statutory Law</strong> (legislation) and <strong>Common Law</strong> (case law)</li>
+    <li>Legal action can be <strong>criminal</strong>, <strong>civil</strong>, or <strong>disciplinary action</strong></li>
+  </ul>
+
+  <div class="elements-grid">
+    <div class="element-card">
+      <div class="label">Civil Action</div>
+      <p>Plaintiff vs Defendant</p>
+    </div>
+    <div class="element-card">
+      <div class="label">Criminal Action</div>
+      <p>Prosecutor vs Accused</p>
+    </div>
+  </div>
+
+  <h2>Australia's Constitutional Framework</h2>
+  <ul>
+    <li>Australia is the <strong>only liberal democracy not to have a bill of rights</strong>; instead, the <em>Commonwealth of Australia Constitution Act</em> lays powers from separation of government</li>
+    <li>Australians' rights come from <strong>international treaties</strong> and <strong>case law</strong></li>
+    <li>A <strong>bill of rights</strong> is a list of fundamental rights and freedoms that a government promises to protect for its people</li>
+    <li><strong>Local councils</strong> are <em>not</em> named in the Constitution but are delegated by states, whereas state/territory and federal parliaments are outlined in constitutional powers</li>
+    <li><strong>Most laws are made by states</strong></li>
+    <li><strong>Queensland only has 1 lower house</strong></li>
+    <li>A bill goes through <strong>3 readings</strong> before being blessed with royal assent by the Governor-General and becoming an <em>act of parliament</em></li>
+  </ul>
+
+  <h2>Health Policy &amp; Resources</h2>
+  <ul>
+    <li>Health policy is largely instituted by <strong>governments</strong></li>
+    <li>Some hospital policies will be in contradiction of the law, but you always need to <strong>abide by the law</strong></li>
+    <li>Courts make decisions on the basis that <strong>healthcare resources are infinite</strong> (not realistic)</li>
+    <li><strong>Rationing</strong> occurs at high levels (PBS) or at lower levels (admission of patients to certain beds) in healthcare to distribute limited resources</li>
+  </ul>
+
+  <h2>The Doctrine of Precedent</h2>
+  <div class="def-box">
+    <div class="def-term">Doctrine of Precedent</div>
+    <p>Courts are bound to follow the decisions of courts <strong>higher up in the same hierarchy</strong>.</p>
+  </div>
+
+  <h2>Regulatory Bodies</h2>
+  <div class="callout note">
+    <div class="callout-title">Key Bodies</div>
+    <p>The <strong>Medical Board of Australia</strong> and <strong>Australian Health Practitioner Regulation Agency (AHPRA)</strong> and the <strong>Queensland Office of the Health Ombudsman</strong> can investigate complaints about unsatisfactory professional practice and misconduct.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 2: HUMAN RIGHTS LAW
+═══════════════════════════════════════════════════════════ -->
+<section id="tab2" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 2</span>Human Rights Law</h1>
+
+  <h2>International Treaties &amp; Conventions</h2>
+  <ul>
+    <li>Human rights are codified in international agreements or treaties between governments called <strong>conventions or covenants</strong></li>
+    <li>By <strong>ratifying a treaty</strong>, a country voluntarily accepts legal obligations under international law</li>
+    <li>If a country does not follow a treaty, <strong>very little can be done as a consequence</strong></li>
+    <li>The obligations under any international treaty are <strong>not binding within Australia</strong> unless and until they are incorporated into Australian domestic laws</li>
+  </ul>
+
+  <h2>Australia's Rights Framework</h2>
+  <ul>
+    <li>There is <strong>nothing in the Australian Constitution</strong> that guarantees the protection of human rights broadly</li>
+    <li><strong>Queensland adopted the Human Rights Act 2019</strong></li>
+  </ul>
+
+  <div class="callout law">
+    <div class="callout-title">Queensland Human Rights Act 2019 — Key Provisions</div>
+    <ul>
+      <li>Everyone has the <strong>right to access health services without discrimination</strong></li>
+      <li>A person <strong>must not be refused emergency medical treatment</strong> that is immediately necessary to save the person's life</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 3: PROFESSIONALISM & ETHICS
+═══════════════════════════════════════════════════════════ -->
+<section id="tab3" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 3</span>Professionalism &amp; Ethics</h1>
+
+  <h2>Professionalism in Medicine</h2>
+  <div class="def-box">
+    <div class="def-term">Professionalism</div>
+    <p>The set of <strong>intrinsic values</strong> (respect, care, responsibility, accountability, self-awareness, integrity and clinical competence), expressed as <strong>extrinsic behaviours</strong> that justify trust between patients and doctors, and between the public and the medical profession.</p>
+  </div>
+  <ul>
+    <li>The profession (medicine) sets its own standards and expectations</li>
+    <li>MBA's Code of Conduct: <strong>Good Medical Practice Guide</strong></li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Ethics in Medicine</h2>
+  <ul>
+    <li>Ethics is a <strong>generic term</strong> for various ways of understanding and examining moral life</li>
+  </ul>
+
+  <h3>Virtue Ethics</h3>
+  <div class="def-box">
+    <div class="def-term">Virtue Ethics</div>
+    <p>Moral action means acting in accordance with <strong>virtuous traits</strong> (intrinsic, established traits). E.g., an honest person tells the truth because to lie would be dishonest, and being an honest person and telling the truth is what they do.</p>
+  </div>
+  <div class="callout warning">
+    <div class="callout-title">Limitations of Virtue Ethics</div>
+    <ul>
+      <li>How do you define a virtuous person?</li>
+      <li>No one is ALL virtuous</li>
+      <li>If the action is not easy, is that person not virtuous?</li>
+      <li>Cannot be applied consistently</li>
+    </ul>
+  </div>
+
+  <h3>Deontology</h3>
+  <div class="def-box">
+    <div class="def-term">Deontology</div>
+    <p>Morality of an act is based on whether the act itself is <strong>right or wrong</strong>. An act is intrinsically, inherently right if it is good without qualification.</p>
+  </div>
+  <div class="callout warning">
+    <div class="callout-title">Limitations of Deontology</div>
+    <ul>
+      <li>Consequences of an act cannot be used to decide if the actor had a good will</li>
+      <li>Individualistic</li>
+      <li>Where do those with limited capacity stand?</li>
+      <li>Does not consider the context or the consequences because of the focus on rational thought</li>
+      <li>Experiential understanding is not required</li>
+    </ul>
+  </div>
+
+  <h3>Utilitarianism</h3>
+  <div class="def-box">
+    <div class="def-term">Utilitarianism</div>
+    <p>The morality of an act is based on whether the act produces the <strong>greatest good</strong> — a consequentialist or teleological theory. Conduct is judged in accordance with the consequences. Everyone's happiness is equal and of equal worth.</p>
+  </div>
+  <div class="callout warning">
+    <div class="callout-title">Limitations of Utilitarianism</div>
+    <ul>
+      <li>Disregard for individual rights</li>
+      <li>Decisions made for the greatest good cannot create that same good for all — could disadvantage minorities</li>
+      <li>What about unintended consequences?</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Bioethical Principles</h2>
+  <div class="callout important">
+    <div class="callout-title">The Four Principles</div>
+    <p><strong>Autonomy · Beneficence · Non-maleficence · Justice</strong> — may conflict with each other and will often need to be balanced</p>
+  </div>
+
+  <h3>Types of Justice</h3>
+  <ul>
+    <li><strong>Distributive justice</strong> — allocation of health resources</li>
+    <li><strong>Rights-based justice</strong> — patient rights</li>
+    <li><strong>Legal justice</strong> — be accountable for acts or failures to act in accordance with morally just laws</li>
+  </ul>
+
+  <div class="callout warning">
+    <div class="callout-title">Limitations of Bioethical Principles</div>
+    <ul>
+      <li>Assumes the doctor is the person making decisions</li>
+      <li>Principal confliction can occur with no clear way to differentiate</li>
+    </ul>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-title">AMA Code of Ethics</div>
+    <p>The AMA code of ethics is essential for setting and maintaining expected behavioural standards.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 4: ADULT CAPACITY
+═══════════════════════════════════════════════════════════ -->
+<section id="tab4" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 4</span>Adult Capacity &amp; Consent</h1>
+
+  <h2>Informed Consent</h2>
+  <div class="def-box">
+    <div class="def-term">Informed Consent</div>
+    <p>A person's <strong>voluntary decision</strong> about medical care that is made with knowledge and understanding of the <strong>benefits and risks</strong> involved.</p>
+  </div>
+  <ul>
+    <li>Good medical practice involves providing information in a way patients can understand, obtaining informed consent, ensuring patients are informed about fees/charges, and advising patients about additional investigative costs</li>
+    <li>Consent is required to provide treatment for <strong>all adults and children</strong> — reflects the view that every person's body is inviolate and protects the autonomy and self-determination of the individual</li>
+    <li>Consent may be <strong>written, verbal, or implied</strong> but must be documented</li>
+  </ul>
+
+  <h2>Parts of Valid Consent</h2>
+  <div class="elements-grid">
+    <div class="element-card">
+      <div class="num">1</div>
+      <div class="label">Decision-Making Capacity</div>
+      <p>The patient must have decision-making capacity</p>
+    </div>
+    <div class="element-card">
+      <div class="num">2</div>
+      <div class="label">Freely &amp; Voluntarily Given</div>
+      <p>Even firm advice is not undue influence</p>
+    </div>
+    <div class="element-card">
+      <div class="num">3</div>
+      <div class="label">Sufficient Specificity</div>
+      <p>Consent must relate to the treatment — nature AND purpose in broad terms</p>
+    </div>
+  </div>
+
+  <h2>Decision-Making Capacity</h2>
+  <ul>
+    <li>Adults <strong>18+ have a presumption of capacity</strong> that can be rebutted</li>
+  </ul>
+
+  <div class="callout law">
+    <div class="callout-title">By Legislation</div>
+    <p>Capacity to make a decision means the person is capable of: <strong>understanding</strong> the nature and effect of the decision; <strong>freely and voluntarily making</strong> the decision; and <strong>communicating</strong> the decision in some way.</p>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-title">By Common Law</div>
+    <p>Capacity is the ability to <strong>understand, retain, believe, weigh, and communicate</strong>.</p>
+  </div>
+
+  <ul>
+    <li>All patients must be informed about the nature and purpose of the treatment, the broad requirements of the treatment, and also the <strong>specific risks, benefits, alternatives, costs etc.</strong> to obtain valid and informed consent</li>
+    <li>Adult patients have the <strong>right to refuse life-sustaining medical treatment</strong></li>
+    <li>Pregnant women have the <strong>right to refuse treatment</strong> and can refuse medical intervention that could save the foetus' life and/or their own</li>
+    <li>The mental health act <strong>cannot be deployed</strong> to achieve the detention of an individual against their will merely because their thinking process is unusual, even apparently bizarre and irrational, and contrary to the views of the overwhelming majority of the community at large</li>
+    <li>If a patient informs the doctor they want a form of treatment and the doctor concludes this is <strong>not clinically indicated</strong>, the doctor is not required to provide it — although they should offer to arrange a second opinion</li>
+    <li>A patient may have <strong>capacity for treatment A but not B</strong></li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Substitute Decision-Making: Legislative Framework (QLD)</h2>
+
+  <div class="hierarchy">
+    <div class="hier-title">Substitute Decision-Maker Hierarchy (QLD)</div>
+    <div class="hier-row"><div class="hier-box">Advance Health Directive (AHD)</div></div>
+    <div class="hier-row"><div class="hier-arrow">↓</div></div>
+    <div class="hier-row"><div class="hier-box light">Enduring Power of Attorney</div></div>
+    <div class="hier-row"><div class="hier-arrow">↓</div></div>
+    <div class="hier-row"><div class="hier-box pale">Statutory Health Attorney</div></div>
+    <div class="hier-row"><div class="hier-arrow">↓</div></div>
+    <div class="hier-row"><div class="hier-box pale">QCAT-Appointed Guardian</div></div>
+    <div class="hier-row"><div class="hier-arrow">↓</div></div>
+    <div class="hier-row"><div class="hier-box pale">Public Guardian</div></div>
+  </div>
+
+  <h3>Advance Health Directive (AHD)</h3>
+  <ul>
+    <li>Mechanism for adults at a time when they have capacity to <strong>plan for and leave directions</strong> for their future care and treatment, should decision-making capacity be lost</li>
+    <li>Can leave wishes, specific directions, and/or appoint an attorney</li>
+    <li>AHD must be signed by the adult, eligible witness, and a doctor who attests that they have discussed the AHD and that the adult had capacity at the time of signing</li>
+    <li>Operates <strong>only</strong> when adult loses capacity</li>
+    <li>An adult with decision-making capacity can <strong>revoke an AHD or make a new one</strong></li>
+    <li>A health provider is <strong>not affected</strong> by an adult's AHD to the extent the health provider does not know the adult has an AHD</li>
+  </ul>
+
+  <div class="callout important">
+    <div class="callout-title">AHD May Be Overridden If...</div>
+    <p>A health professional has reasonable grounds to believe the direction in an AHD is:</p>
+    <ul>
+      <li>Uncertain</li>
+      <li>Inconsistent with good medical practice</li>
+      <li>Medical treatments have advanced to the point where the terms of the direction are inappropriate</li>
+    </ul>
+  </div>
+
+  <h3>QCAT</h3>
+  <ul>
+    <li><strong>Queensland Civil and Administrative Tribunal</strong> — can appoint guardians to make health decisions for adults lacking capacity</li>
+  </ul>
+
+  <h3>Enduring Power of Attorney</h3>
+  <ul>
+    <li>The adult can appoint <strong>multiple enduring powers of attorney</strong> to make decisions in relation to financial and personal matters (including healthcare)</li>
+    <li>Multiple attorneys are <strong>joint attorneys</strong> unless otherwise stated — there is an obligation to regularly consult and they must exercise the power unanimously, unless the enduring document provides otherwise</li>
+    <li>If there is a disagreement, the <strong>public guardian may exercise power</strong> for the matter</li>
+  </ul>
+
+  <h3>Statutory Health Attorney</h3>
+  <p>Order of priority:</p>
+  <ol>
+    <li>Close/continuing spouse</li>
+    <li>Person &gt;18 years who has care of the adult and is <em>not</em> a paid carer</li>
+    <li>Person &gt;18 years who is a close friend or relative and <em>not</em> a paid carer</li>
+    <li>The Public Guardian</li>
+  </ol>
+
+  <h3>Information for Substitute Decision-Makers</h3>
+  <p>Substitute decision-makers require information on:</p>
+  <ul>
+    <li>The nature of the adult's condition</li>
+    <li>The particular form of healthcare</li>
+    <li>The reasons why</li>
+    <li>The alternative forms of healthcare available</li>
+    <li>The general nature and effect of each form of healthcare</li>
+    <li>The significant risks associated with each form of healthcare</li>
+  </ul>
+
+  <h3>Principles for Decision-Makers</h3>
+  <div class="callout note">
+    <div class="callout-title">General Principles</div>
+    <ul>
+      <li>Presumption of capacity</li>
+      <li>Respect for a person's human rights</li>
+      <li>Empowering the adult to exercise their rights and freedoms</li>
+      <li>Maintaining the adult's existing supportive relationships</li>
+      <li>Respect for privacy</li>
+      <li>Maximising the adult's participation in decision-making</li>
+      <li>Making decisions in a way that safeguards the adult's best interests</li>
+    </ul>
+  </div>
+  <div class="callout note">
+    <div class="callout-title">Healthcare Principles</div>
+    <ul>
+      <li>Non-discrimination</li>
+      <li>Considering the person's inherent dignity, worth and autonomy</li>
+    </ul>
+  </div>
+  <ul>
+    <li>If attorneys make a decision that is contrary to the principles, the <strong>public guardian steps in</strong></li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Treatment Without Consent</h2>
+  <ul>
+    <li>If no consent is provided, treatment is <strong>unlawful</strong> unless it is urgent health care or minor/uncontroversial health care</li>
+    <li>Some health cares cannot be consented to by the patient or their representative and require approval from a court, including <strong>special health care and ECT</strong></li>
+  </ul>
+
+  <div class="callout law">
+    <div class="callout-title">Healthcare Without Consent — Permitted When:</div>
+    <ul>
+      <li>The provider reasonably believes that the adult has impaired capacity, AND</li>
+      <li>The healthcare should be carried out urgently to meet imminent risk to the adult's life or to prevent significant pain or distress, AND</li>
+      <li>It is not reasonably practicable to get consent from a substitute decision-maker</li>
+    </ul>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">Healthcare CANNOT Be Carried Out Without Consent If:</div>
+    <ul>
+      <li>Doctor knows the adult objects to it in an AHD</li>
+      <li>Provider knows the adult objects — unless the adult has minimal or no understanding of the healthcare</li>
+      <li>The provider must fully document in the patient's records the various things enabling the healthcare</li>
+    </ul>
+  </div>
+
+  <h2>Good Samaritan</h2>
+  <div class="callout important">
+    <div class="callout-title">Good Samaritan Legislation</div>
+    <p>Helping at the scene — you are <strong>not liable</strong>, providing they act in <strong>good faith</strong>, without <strong>gross negligence</strong>, and without <strong>fee or reward</strong>.</p>
+  </div>
+
+  <h2>Decisions Reserved for the Adult / Court Only</h2>
+  <div class="callout warning">
+    <div class="callout-title">Cannot Be Made by Substitute Decision-Makers</div>
+    <p>Some decisions can only be made by the adult themselves under AHD or by tribunal or supreme court:</p>
+    <ul>
+      <li>Tissue donation</li>
+      <li>Sterilisation</li>
+      <li>Termination of pregnancy</li>
+      <li>Medical research participation</li>
+    </ul>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-title">Benevolent Paternalism</div>
+    <p>The notion of doing it for the patient's own good.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 5: CHILD CAPACITY
+═══════════════════════════════════════════════════════════ -->
+<section id="tab5" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 5</span>Child Capacity</h1>
+
+  <h2>Presumptions &amp; Parental Consent</h2>
+  <ul>
+    <li>Children are <strong>presumed NOT to have capacity</strong> to consent to healthcare</li>
+    <li>There is an expectation that parents will make <strong>informed decisions in their child's best interests</strong></li>
+    <li><strong>Only one parent</strong> is required to consent to routine medical treatments unless:
+      <ul>
+        <li>There is a court order requiring joint decision-making for major long-term issues, OR</li>
+        <li>The treatment is a <strong>special medical procedure</strong> which requires court or tribunal approval</li>
+      </ul>
+    </li>
+    <li>If parents cannot agree, application to the <strong>Family Court</strong> happens — the court decides based on the best interests of the child</li>
+    <li>Parents do <strong>not</strong> have capacity to consent for procedures proposed for the primary purpose of sterilisation (not cancer or something else)</li>
+  </ul>
+
+  <h2>Special Medical Procedures</h2>
+  <div class="def-box">
+    <div class="def-term">Special Medical Procedure — Defined By:</div>
+    <ul style="margin-top:8px;">
+      <li>Invasive, irreversible nature</li>
+      <li>Significant risk of making the wrong decision</li>
+      <li>Consequences of a wrong decision would be particularly grave</li>
+      <li>Conflicting interests of the child, parents, carers, or other family</li>
+    </ul>
+    <p style="margin-top:8px;">Other examples: organ donation, ethnically controversial issues (intersex child).</p>
+  </div>
+
+  <h2>Court Override of Parental Refusal</h2>
+  <ul>
+    <li>If parents refuse to consent to treatment that is believed to be in the child's best interests, the <strong>courts can be asked to make a decision</strong> and can overrule the parents' refusal</li>
+    <li>No criminal liability is incurred by a practitioner administering a blood transfusion even where a parent has refused to consent, so long as:
+      <ul>
+        <li>A blood transfusion is necessary to <strong>preserve the life of the child</strong>, AND</li>
+        <li>A second medical practitioner examines the child and agrees</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Gillick Competence</h2>
+  <div class="def-box">
+    <div class="def-term">Gillick Competence</div>
+    <p>If a child has sufficient understanding and intelligence to <strong>understand fully what is proposed</strong>, they are Gillick competent and can provide consent to treatment (assessed on a case-by-case basis).</p>
+  </div>
+
+  <ul>
+    <li>If a parent of a child is under 18 years of age themselves, the parent must have capacity to make decisions for the child — deemed <strong>Gillick competence</strong></li>
+    <li>If the parent lacks capacity because they are not Gillick competent, a guardian may need to be appointed</li>
+  </ul>
+
+  <h3>What to Look for in Gillick Assessment</h3>
+  <ul>
+    <li>Do they understand the nature of the procedure?</li>
+    <li>Can they accurately explain it back?</li>
+    <li>Do they have insight into why the treatment is in their best interests?</li>
+    <li>Do they understand risks and benefits?</li>
+    <li>Have they considered alternatives?</li>
+    <li>Their ability to consider all aspects of care</li>
+    <li>Do they demonstrate maturity and autonomy in other aspects of life?</li>
+    <li><strong>If in doubt — not competent</strong></li>
+  </ul>
+
+  <div class="callout important">
+    <div class="callout-title">Even If Not Gillick Competent</div>
+    <p>The child's <strong>dignity and right to information</strong> should be respected.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">Critical Rule</div>
+    <p>A Gillick competent child <strong>cannot refuse treatment</strong> that is otherwise in their best interests, including life-saving treatment. Courts can overrule a child's refusal and have a responsibility to protect children from harm until they reach adulthood.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 6: CONFIDENTIALITY & PRIVACY
+═══════════════════════════════════════════════════════════ -->
+<section id="tab6" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 6</span>Confidentiality &amp; Privacy</h1>
+
+  <h2>Patient Rights &amp; The Duty of Confidentiality</h2>
+  <ul>
+    <li>Patients have a right to expect <strong>confidential information is held by doctors and staff</strong> unless release is permitted by law</li>
+    <li>Patient has a right to know what information is held about them, their <strong>right to access their medical records</strong>, and their right to have control over its use and disclosure, with limited exceptions</li>
+  </ul>
+
+  <h3>Why Confidentiality Matters</h3>
+  <ul>
+    <li>Encourages patients to be frank and discuss sensitive matters freely</li>
+    <li>Protects a patient's autonomy</li>
+    <li>No risk of discrimination</li>
+    <li>Elimination of trust</li>
+  </ul>
+
+  <div class="callout law">
+    <div class="callout-title">Common Law Definition of Confidential Information</div>
+    <p>Information disclosed on the basis that it was to remain confidential. It is acquired by a person, in their capacity as the designated person, from which a person who is receiving or has received a public health service could be identified.</p>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">Cardinal Rule</div>
+    <p><strong>ANYTHING THAT IS EXCHANGED BETWEEN YOU AND THE PATIENT IS CONFIDENTIAL.</strong></p>
+  </div>
+
+  <h2>Lawful Disclosures</h2>
+  <p>It is lawful to disclose confidential information:</p>
+  <ul>
+    <li>For <strong>care or treatment</strong> of a patient (treating team or colleague overtaking care)</li>
+    <li>At the <strong>consent of the patient</strong></li>
+    <li>When there is <strong>risk to the public</strong></li>
+    <li>When <strong>another law requires</strong> disclosure (child abuse, notifiable disease, legal proceedings, etc.)</li>
+  </ul>
+
+  <h3>Disclosure to Persons with Sufficient Interest</h3>
+  <ul>
+    <li>You are allowed to disclose to a <strong>person with sufficient interest</strong> — close relative, close friend, adult who is providing home care, or a GP who has had responsibility for care and treatment</li>
+    <li><strong>BUT NOT</strong> when you are expressly told not to share that information</li>
+    <li>This obligation <strong>persists after a patient dies</strong></li>
+  </ul>
+
+  <h3>Disclosure in the Public Interest</h3>
+  <div class="callout important">
+    <div class="callout-title">Requirements for Public Interest Disclosure</div>
+    <ul>
+      <li>The relevant chief executive must <strong>authorise in writing</strong></li>
+      <li>Only so far as necessary to <strong>prevent imminent serious harm</strong></li>
+      <li>Disclosed to an <strong>appropriate responsible authority</strong></li>
+      <li>Only in the <strong>most compelling circumstances</strong></li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Privacy Law</h2>
+  <ul>
+    <li>Both <strong>Australian Privacy Principles (APPs)</strong> and <strong>Queensland Privacy Principles (QPPs)</strong> exist</li>
+    <li><strong>APPs</strong> are for <em>private</em> practises</li>
+    <li><strong>QPPs</strong> are for <em>public</em> practises</li>
+    <li>Oversight: Office of the Information Commissioner Queensland &amp; Office of the Australian Information Privacy Commissioner</li>
+  </ul>
+
+  <h3>Queensland Privacy Principles (QPPs)</h3>
+  <ul>
+    <li>Manage personal information in an <strong>open and transparent</strong> way</li>
+    <li><strong>Anonymity</strong></li>
+    <li>Can only collect personal information that is <strong>reasonably necessary</strong></li>
+    <li>Assess unsolicited personal information</li>
+    <li>Notify individuals about the collection of personal information</li>
+    <li>Can only use or disclose information for the <strong>purpose it was collected</strong></li>
+    <li>Ensure information is <strong>up to date and accurate</strong></li>
+    <li>Reasonable steps to ensure the <strong>protection</strong> of personal information</li>
+    <li>Give access to and correct personal information held</li>
+  </ul>
+
+  <h3>Personal vs Sensitive Information</h3>
+  <div class="def-box">
+    <div class="def-term">Personal Information</div>
+    <p>An individual who is <strong>reasonably identifiable</strong> from the information or opinion.</p>
+  </div>
+  <div class="def-box">
+    <div class="def-term">Sensitive Information (additional protections)</div>
+    <p>Racial origin, political opinions, sexual orientation, criminal record, biometric information.</p>
+  </div>
+
+  <h2>Privacy Tort (Cause of Action)</h2>
+  <div class="callout law">
+    <div class="callout-title">Cause of Action</div>
+    <p>An individual has a cause of action against another if the other person invaded the individual's privacy by <strong>intruding upon their seclusion</strong> or <strong>misusing information</strong> relating to them.</p>
+    <p style="margin-top:8px;">It is a <strong>defence</strong> if the other person acted with lawful authority or in certain circumstances involving consent, necessity, or the defence of persons or property.</p>
+  </div>
+
+  <h2>Genetic Information</h2>
+  <div class="callout important">
+    <div class="callout-title">Permitted Health Situation — Genetic Information Disclosure</div>
+    <p>A permitted health situation for disclosure of genetic information exists if:</p>
+    <ul>
+      <li>The organisation obtained the information in the course of providing a health service</li>
+      <li>The organisation reasonably believes that use or disclosure is necessary to <strong>lessen or prevent a serious threat to the life or health of a genetic relative</strong></li>
+      <li>The disclosure is <strong>lawful</strong></li>
+      <li>The relative is <strong>no further removed than 3rd degree</strong></li>
+    </ul>
+  </div>
+  <ul>
+    <li>If disclosure is permissible but the health practitioner is unwilling to disclose due to conscience or extenuating circumstances within the family, they should <strong>consult another suitably qualified health practitioner</strong> and consider if it would be more appropriate coming from them</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 7: NEGLIGENCE
+═══════════════════════════════════════════════════════════ -->
+<section id="tab7" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 7</span>Negligence</h1>
+
+  <div class="def-box">
+    <div class="def-term">Negligence</div>
+    <p>Causing damage to another through a <strong>failure to take reasonable care</strong> — can be an act or omission. Civil action: the plaintiff needs to prove these elements <strong>on the balance of probabilities</strong>.</p>
+  </div>
+
+  <h2>The 4 Elements of a Negligence Action</h2>
+  <div class="elements-grid">
+    <div class="element-card">
+      <div class="num">1</div>
+      <div class="label">Duty of Care Owed</div>
+      <p>A legal duty exists between parties</p>
+    </div>
+    <div class="element-card">
+      <div class="num">2</div>
+      <div class="label">Standard &amp; Breach of Duty</div>
+      <p>Failure to meet the expected standard</p>
+    </div>
+    <div class="element-card">
+      <div class="num">3</div>
+      <div class="label">Harm &amp; Causation</div>
+      <p>Recognised harm causally connected to the breach</p>
+    </div>
+    <div class="element-card">
+      <div class="num">4</div>
+      <div class="label">Damages</div>
+      <p>Quantifiable and foreseeable</p>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">Critical Rule</div>
+    <p>All <strong>4 elements</strong> are needed for a successful negligence case, commenced <strong>within 3 years</strong> of the damages occurring.</p>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Element 1: Duty of Care</h2>
+  <table>
+    <tr><th>Direct Relationship (Duty Owed)</th><th>No Direct Relationship</th></tr>
+    <tr><td>Doctor / patient</td><td>Examinations for third parties</td></tr>
+    <tr><td>Nurse / patient</td><td>Consultations and second opinions</td></tr>
+    <tr><td>Hospital and ambulance / patient</td><td>Pathology tests</td></tr>
+    <tr><td></td><td>Emergency situations</td></tr>
+    <tr><td></td><td>Alternative health practitioner</td></tr>
+    <tr><td></td><td>Receptionist</td></tr>
+    <tr><td></td><td>Sexual partner of patient</td></tr>
+    <tr><td></td><td>Unborn child of patient</td></tr>
+  </table>
+  <ul>
+    <li>Doctor's duty of care: a <strong>single comprehensive duty</strong> covering all the ways in which a doctor is called upon to exercise skill and judgement</li>
+    <li><strong>Vicarious liability</strong>: employer is vicariously liable for the negligence of employees for negligent acts and omissions arising in the course of employment</li>
+    <li>A <strong>hospital</strong> owes its patients a <strong>non-delegable duty of care</strong> — cannot pass the blame</li>
+  </ul>
+
+  <h2>Element 2: Standard &amp; Breach of Duty</h2>
+  <ul>
+    <li>The standard of care is that expected of a <strong>reasonable and competent doctor in the same set of circumstances</strong></li>
+    <li>Factors considered:
+      <ul>
+        <li>The risk must have been <strong>foreseeable</strong></li>
+        <li>Not insignificant, serious harm</li>
+        <li>Burden of taking precautions</li>
+        <li>Whether a reasonable person would have taken the precautions</li>
+      </ul>
+    </li>
+    <li>A doctor does <strong>not</strong> breach their duty if they acted in a way that was <strong>widely accepted at the time by peer professional opinion</strong></li>
+    <li>However, if their actions <strong>contradict the written law</strong> or are labelled <strong>irrational</strong>, the peer professional opinion defence cannot be used</li>
+  </ul>
+
+  <h3>Duty to Inform of Material Risks</h3>
+  <div class="def-box">
+    <div class="def-term">Material Risk</div>
+    <p>A risk is material if a <strong>reasonable person in the patient's position</strong> or the doctor's position would be likely to attach significance to it. The patient would also need to establish causation.</p>
+  </div>
+  <ul>
+    <li>A healthcare professional has a duty to inform the patient of <strong>all material risks</strong> inherent in the treatment/intervention</li>
+    <li>A person is <strong>not liable</strong> for negligence for harm suffered as a result of the materialisation of an <strong>inherent risk</strong> — one that cannot be avoided by the exercise of reasonable care and skill</li>
+  </ul>
+
+  <h2>Element 3: Harm &amp; Causation</h2>
+  <ul>
+    <li>A <strong>recognised form of harm</strong> has resulted and there has been some damage</li>
+    <li>The damage was <strong>causally connected</strong> to the breach (factual causation)</li>
+    <li>Consider if the <strong>scope of liability</strong> can extend to the person in breach</li>
+    <li>Despite the duty to warn of all material risks, a doctor will only be liable if the failure to warn <strong>was the cause of the harm</strong> (factual causation)</li>
+    <li>The scope of liability is about ensuring the patient is protected from the occurrence of a physical injury which is <strong>unacceptable to them</strong></li>
+    <li>The patient will <strong>not</strong> be compensated for the occurrence of a physical injury were they <strong>prepared to take the risk</strong></li>
+  </ul>
+
+  <h2>Element 4: Damages</h2>
+  <ul>
+    <li>Related to the <strong>degree of harm</strong> — NOT the degree of negligence</li>
+    <li>Types: general damages, specific damages, future losses and expenses</li>
+    <li>Compensation is designed to <strong>restore the plaintiff to the position</strong> they would have been in if the negligence had not occurred</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Defences to Negligence</h2>
+  <ul>
+    <li><strong>Contributory negligence</strong> — plaintiff contributed to the harm (e.g., failing to attend follow-up appointments, failure to properly describe symptoms)</li>
+    <li><strong>Voluntary assumption of risk</strong> — patient voluntarily assumed a risk; no liability for materialisation of an inherent risk</li>
+    <li><strong>Good Samaritan legislation</strong> — for those not at work in emergency situations</li>
+    <li>Employer will generally <strong>indemnify</strong> you against any alleged negligence</li>
+  </ul>
+
+  <h2>Special Rules</h2>
+  <div class="callout note">
+    <div class="callout-title">Failed Sterilisation / Contraceptive Cases</div>
+    <p>A court <strong>cannot award damages for economic loss</strong> arising out of the costs ordinarily associated with maintaining a child — failed sterilisation, failed contraceptive procedure/advice.</p>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-title">Criminal Negligence</div>
+    <p>Criminal negligence is <strong>rare</strong> and may occur where a person caused a death. Prosecution may be commenced for <strong>manslaughter</strong> and/or <strong>failure to provide the necessities of life</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 8: PATIENT SAFETY & OPEN DISCLOSURE
+═══════════════════════════════════════════════════════════ -->
+<section id="tab8" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 8</span>Patient Safety &amp; Open Disclosure</h1>
+
+  <h2>Adverse Events</h2>
+  <div class="def-box">
+    <div class="def-term">Adverse Event</div>
+    <p>An unexpected and undesired incident directly associated with the care or services provided to the patient, caused by medical management. Includes the actions or omissions of individuals and can include systemic problems within the healthcare system. <strong>Sentinel = preventable</strong>.</p>
+  </div>
+
+  <h2>Approaches to Learning from Adverse Events</h2>
+  <div class="elements-grid">
+    <div class="element-card">
+      <div class="label">Person Approach</div>
+      <p>Focuses on the negligent individual</p>
+    </div>
+    <div class="element-card">
+      <div class="label">Systems Approach</div>
+      <p>Focuses on upstream factors within the healthcare system</p>
+    </div>
+  </div>
+
+  <ul>
+    <li><strong>NSQHS</strong> (National Safety and Quality Health Standards) put in place to prevent systemic failures within the healthcare system causing harm to individuals</li>
+  </ul>
+
+  <h2>Good Medical Practice — Code of Conduct Principles</h2>
+  <ul>
+    <li>Care of patient is <strong>primary concern</strong></li>
+    <li>Maintaining a high level of <strong>medical competence and professional conduct</strong> is essential</li>
+    <li>Working within <strong>scope of practice</strong></li>
+    <li>Adequate knowledge and skills</li>
+    <li>Maintaining <strong>adequate records</strong></li>
+    <li>Balancing benefit and harm</li>
+    <li>Providing treatment options</li>
+    <li>Alleviate patient symptoms and distress where a cure is possible or not possible</li>
+    <li>Supporting a patient's right to seek a <strong>second opinion</strong></li>
+    <li>Effective use of resources</li>
+  </ul>
+
+  <h2>Clinical Incident Management Policy — Aims</h2>
+  <ul>
+    <li>Take <strong>proactive approaches</strong> to identify and treat hazards before patients are harmed</li>
+    <li>When patients are harmed, <strong>promptly intervene</strong> to minimise harm</li>
+    <li><strong>Disclose</strong> the incident that resulted in harm</li>
+    <li>Ensure <strong>lessons are learned and communicated</strong></li>
+  </ul>
+
+  <h2>Safety Culture Values</h2>
+  <p>
+    <span class="tag">Openness</span>
+    <span class="tag">Honesty</span>
+    <span class="tag">Fairness</span>
+    <span class="tag">Accountability</span>
+    <span class="tag">Patient-centred care</span>
+    <span class="tag">Reporting</span>
+    <span class="tag">Training &amp; Improvement</span>
+  </p>
+
+  <hr class="divider">
+
+  <h2>Open Disclosure</h2>
+  <div class="callout important">
+    <div class="callout-title">Open Disclosure — What It Involves</div>
+    <p>A <strong>core professional requirement and institutional obligation</strong> that includes:</p>
+    <ul>
+      <li>An <strong>apology</strong></li>
+      <li>A <strong>factual explanation</strong></li>
+      <li>Opportunity for the patient/family to <strong>relay their experience</strong></li>
+      <li>Discussion of the <strong>potential consequences</strong></li>
+      <li>Explanation of the <strong>steps being taken</strong> to manage the adverse event and prevent recurrence</li>
+    </ul>
+  </div>
+
+  <ul>
+    <li>Litigation may be <strong>reduced</strong> if patients appreciate the fallibility and honesty of the clinician</li>
+  </ul>
+
+  <div class="callout law">
+    <div class="callout-title">Apology Does Not Equal Admission of Fault</div>
+    <p>An apology made by or on behalf of a person in relation to any matter alleged to have been caused by the person does <strong>not constitute an express or implied admission of fault or liability</strong> by the person in relation to the matter, and is not relevant to the determination of fault or liability in relation to the matter. <strong>Evidence of an apology is not admissible in any civil proceeding as evidence of fault or liability.</strong></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 9: TERMINATION OF PREGNANCY
+═══════════════════════════════════════════════════════════ -->
+<section id="tab9" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>Section 9</span>Termination of Pregnancy</h1>
+
+  <div class="callout note">
+    <div class="callout-title">Context</div>
+    <p>Despite decriminalisation around Australia, <strong>barriers to access remain a reality</strong> for many women.</p>
+  </div>
+
+  <h2>Who May Perform / Consent to a Termination</h2>
+  <ul>
+    <li>A person who <strong>consents to, assists in, or performs a termination on themselves</strong> does not commit an offence</li>
+    <li>A <strong>medical practitioner may perform a termination</strong> on a person who is <strong>NOT MORE THAN 22 WEEKS</strong> pregnant</li>
+  </ul>
+
+  <h2>Termination After 22 Weeks</h2>
+  <div class="callout law">
+    <div class="callout-title">After 22 Weeks — Requirements</div>
+    <p>A medical practitioner may perform a termination if:</p>
+    <ul>
+      <li>In all the circumstances, the practitioner <strong>believes that the termination should be performed</strong>, AND</li>
+      <li>The practitioner has <strong>consulted with another medical practitioner</strong> who also considers that, in all the circumstances, the termination should be performed</li>
+    </ul>
+    <p>Relevant considerations include: all relevant medical conditions, future physical, psychological and social circumstances.</p>
+  </div>
+
+  <h2>Emergency After 22 Weeks</h2>
+  <div class="callout warning">
+    <div class="callout-title">Emergency Exception</div>
+    <p>In an emergency, a medical practitioner may perform a termination of pregnancy on someone who is more than 22 weeks pregnant if they consider it necessary to <strong>save the person's life or the life of another unborn child</strong>.</p>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Conscientious Objection</h2>
+  <ul>
+    <li>A registered health practitioner may have a <strong>conscientious objection</strong> if asked to perform a termination of pregnancy</li>
+    <li>The practitioner <strong>must disclose</strong> their conscientious objection but is <strong>not required to explain why</strong></li>
+    <li>The practitioner must <strong>refer the person or transfer their care</strong> to another registered medical practitioner who they believe can provide the requested service and who does not have a conscientious objection</li>
+    <li>This does <strong>not limit any duty</strong> owed in an emergency, regardless of conscientious objection</li>
+    <li><strong>Prescribed students</strong> must disclose their conscientious objection to the relevant medical person</li>
+  </ul>
+
+  <h2>Consent &amp; Legal Rights</h2>
+  <div class="callout important">
+    <div class="callout-title">Biological Father — No Legal Standing</div>
+    <p>Consent is <strong>not needed from the biological father</strong>, and he has <strong>no legal right</strong> to prevent or force a termination of pregnancy.</p>
+  </div>
+
+  <div class="callout law">
+    <div class="callout-title">Adults with Impaired Capacity</div>
+    <p>QCAT or the Supreme Court must give consent for adults with impaired capacity to have an abortion — it is a <strong>special medical procedure</strong>.</p>
+  </div>
+
+  <h2>Safe Access Zones</h2>
+  <div class="callout note">
+    <div class="callout-title">Safe Access Zones</div>
+    <ul>
+      <li>Safe access zones around premises are <strong>150 metres</strong></li>
+      <li>Conduct is an offence if it:
+        <ul>
+          <li>Relates to terminations or could be perceived as relating to terminations</li>
+          <li>Is visible or audible to people entering or leaving</li>
+          <li>Would be reasonably likely to <strong>deter a person from entering or leaving</strong>, from requesting or undergoing a termination, or from performing or assisting with a termination</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* ══════════════════════════════════════
+     FLOATING MINI CHATBOT (all tabs)
+  ══════════════════════════════════════ */
+  #floatToggle {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 500;
+    background: var(--tab-active);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    width: 54px; height: 54px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    transition: transform 0.2s, background 0.2s;
+  }
+  #floatToggle:hover { transform: scale(1.1); background: #3d2c12; }
+  #floatToggle.open { background: var(--rust); border-color: var(--rust); }
+
+  #floatChat {
+    position: fixed;
+    bottom: 94px;
+    right: 28px;
+    z-index: 499;
+    width: 360px;
+    max-height: 520px;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 36px rgba(0,0,0,0.22);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: popIn 0.2s ease;
+  }
+  #floatChat.open { display: flex; }
+  /* ensure chat is hidden on load even if JS hasn't run */
+  #floatChat:not(.open) { display: none !important; }
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .float-header {
+    background: var(--tab-active);
+    padding: 11px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    flex-shrink: 0;
+  }
+  .float-header span {
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .float-clear-btn {
+    background: none; border: none;
+    color: var(--brown-light); font-size: 0.72rem;
+    cursor: pointer; font-family: 'Source Serif 4', serif;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 2px 6px;
+  }
+  .float-clear-btn:hover { color: var(--gold-light); }
+  .float-msgs {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+  }
+  .float-msg { font-size: 0.85rem; line-height: 1.6; animation: fadeUp 0.2s ease; }
+  .float-msg .fl-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .float-msg.user .fl-label { color: var(--brown-light); }
+  .float-msg.ai   .fl-label { color: var(--rust); }
+  .float-msg .fl-body {
+    padding: 8px 11px;
+    border-radius: 0 6px 6px 6px;
+    color: var(--ink-light);
+  }
+  .float-msg.user .fl-body {
+    background: var(--parchment);
+    border-left: 2px solid var(--border);
+    border-radius: 6px 0 6px 6px;
+    text-align: right;
+  }
+  .float-msg.ai .fl-body {
+    background: #fffdf8;
+    border-left: 2px solid var(--gold);
+  }
+  .float-msg .fl-body strong { color: var(--ink); }
+  .float-msg .fl-body em { color: var(--brown); }
+  .float-msg .fl-body ul { padding-left: 16px; margin: 4px 0; }
+  .float-msg .fl-body ul li { list-style: disc; padding: 0; margin-bottom: 3px; }
+  .float-msg .fl-body ul li::before { display: none; }
+  .float-msg .fl-body p { margin-bottom: 4px; }
+  .float-input-row {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--border-light);
+    background: var(--parchment);
+    flex-shrink: 0;
+  }
+  #floatInput {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    outline: none;
+    padding: 7px 10px;
+    resize: none;
+    height: 36px;
+    max-height: 90px;
+    overflow-y: auto;
+  }
+  #floatInput:focus { border-color: var(--gold); }
+  #floatSendBtn {
+    background: var(--tab-active);
+    border: none; border-radius: 4px;
+    color: var(--gold-light);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 12px;
+    transition: background 0.15s;
+  }
+  #floatSendBtn:hover { background: #3d2c12; }
+  #floatSendBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* source badges in float */
+  .src-notes {
+    display: inline-block; background: #e8f4e8; border: 1px solid #7aaa7a;
+    border-radius: 3px; color: #2a6b2a; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.05em; padding: 1px 6px; margin: 1px 2px; text-transform: uppercase;
+  }
+  .src-web {
+    display: inline-block; background: #e8f0fb; border: 1px solid #7a9fd4;
+    border-radius: 3px; color: #1a3a7c; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.05em; padding: 1px 6px; margin: 1px 2px; text-transform: uppercase;
+  }
+
+  /* ── EXAM PREP TAB ── */
+  .exam-tab-btn { color: var(--gold-light) !important; font-weight: 600 !important; }
+  .exam-tab-btn.active { border-bottom-color: var(--gold-light) !important; }
+
+  #tabExam { max-width: 900px; padding: 40px 50px 100px; }
+
+  .exam-intro {
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+    color: var(--ink-light);
+  }
+  .exam-intro strong { color: var(--ink); }
+
+  /* Topic selector */
+  .topic-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .topic-chip {
+    background: var(--parchment);
+    border: 1.5px solid var(--border-light);
+    border-radius: 20px;
+    color: var(--brown);
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .topic-chip:hover { border-color: var(--gold); color: var(--ink); background: var(--highlight); }
+  .topic-chip.selected { background: var(--tab-active); border-color: var(--gold); color: var(--gold-light); }
+
+  /* Generate button */
+  .gen-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .gen-btn {
+    background: var(--tab-active);
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    color: var(--gold-light);
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 11px 26px;
+    transition: background 0.2s;
+  }
+  .gen-btn:hover:not(:disabled) { background: #3d2c12; }
+  .gen-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .gen-label { font-size: 0.8rem; color: var(--brown-light); font-style: italic; }
+
+  /* Scenario card */
+  .scenario-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    animation: fadeUp 0.35s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .scenario-header {
+    background: var(--tab-active);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .scenario-header .sc-title {
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .scenario-header .sc-marks {
+    color: #a89878;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .scenario-body { padding: 20px 22px; }
+  .scenario-text {
+    font-size: 0.93rem;
+    line-height: 1.75;
+    color: var(--ink-light);
+    margin-bottom: 18px;
+    white-space: pre-wrap;
+  }
+
+  /* Questions within scenario */
+  .question-block {
+    border-top: 1px solid var(--border-light);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  .question-text {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .question-marks {
+    display: inline-block;
+    background: var(--highlight);
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    color: var(--rust);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 1px 8px;
+    margin-left: 8px;
+    text-transform: uppercase;
+  }
+
+  /* Answer textarea */
+  .answer-area {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    min-height: 120px;
+    outline: none;
+    padding: 12px 14px;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .answer-area:focus { border-color: var(--gold); background: #fff; }
+  .answer-area::placeholder { color: var(--brown-light); font-style: italic; }
+
+  /* Submit / feedback */
+  .submit-btn {
+    background: var(--rust);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-top: 10px;
+    padding: 9px 20px;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover:not(:disabled) { background: #6e2020; }
+  .submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .feedback-box {
+    margin-top: 14px;
+    background: #fffdf5;
+    border: 1.5px solid var(--gold);
+    border-radius: 5px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    display: none;
+  }
+  .feedback-box.visible { display: block; animation: fadeUp 0.3s ease; }
+  .feedback-box strong { color: var(--ink); }
+  .feedback-box em { color: var(--brown); }
+  .feedback-box ul { padding-left: 16px; margin: 6px 0; }
+  .feedback-box ul li { list-style: disc; padding: 0; margin-bottom: 4px; }
+  .feedback-box ul li::before { display: none; }
+  .feedback-box p { margin-bottom: 6px; }
+  .feedback-box .score-line {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+  .reveal-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--brown-light);
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.75rem;
+    margin-top: 8px;
+    padding: 5px 12px;
+    transition: all 0.15s;
+  }
+  .reveal-btn:hover { border-color: var(--gold); color: var(--brown); }
+
+  /* streaming cursor in feedback */
+  .stream-cursor { color: var(--gold); animation: blink 0.8s infinite; }
+
+  /* empty state */
+  .exam-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--brown-light);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .exam-empty .empty-icon { font-size: 2.5rem; margin-bottom: 14px; }
+
+  /* chat msg styles still needed for float bot */
+  .chat-msg { margin-bottom: 20px; animation: fadeUp 0.3s ease; }
+  .chat-msg .msg-label { font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:5px; }
+  .chat-msg.user .msg-label { color: var(--brown-light); }
+  .chat-msg.ai   .msg-label { color: var(--rust); }
+  .chat-msg .msg-body { font-size:0.93rem; line-height:1.7; color:var(--ink-light); }
+  .chat-msg.user .msg-body { background:var(--parchment); border-left:3px solid var(--border); padding:10px 14px; border-radius:0 4px 4px 0; }
+  .chat-msg.ai   .msg-body { border-left:3px solid var(--gold); padding:10px 14px; border-radius:0 4px 4px 0; background:#fffdf8; }
+  .msg-body strong { color:var(--ink); font-weight:700; }
+  .msg-body em { color:var(--brown); font-style:italic; }
+  .msg-body ul { padding-left:18px; margin:8px 0; }
+  .msg-body ul li { margin-bottom:5px; list-style:disc; padding-left:0; }
+  .msg-body ul li::before { display:none; }
+  .msg-body ol { padding-left:18px; margin:8px 0; }
+  .msg-body ol li { list-style:decimal; padding-left:0; margin-bottom:5px; }
+  .msg-body ol li::before { display:none; }
+  .msg-body p { margin-bottom:8px; }
+</style>
+
+<!-- ══ FLOATING MINI CHATBOT ══ -->
+<button id="floatToggle" title="Ask AI Tutor" onclick="toggleFloat()">🤖</button>
+<div id="floatChat">
+  <div class="float-header">
+    <span>🤖 CMPP Tutor</span>
+    <button class="float-clear-btn" onclick="clearFloat()">Clear</button>
+  </div>
+  <div class="float-msgs" id="floatMsgs">
+    <div class="float-msg ai">
+      <div class="fl-label">CMPP Tutor</div>
+      <div class="fl-body">Ask me anything about CMPP1 — I'll answer from your notes, or search the web if needed. <span class="src-notes">📚 Notes</span> <span class="src-web">🌐 Web</span> labelled in every reply.</div>
+    </div>
+  </div>
+  <div class="float-input-row">
+    <textarea id="floatInput" placeholder="Ask a quick question..." onkeydown="floatKey(event)" rows="1"></textarea>
+    <button id="floatSendBtn" onclick="floatSend()">↑</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB EXAM: EXAM PREP
+═══════════════════════════════════════════════════════════ -->
+<section id="tabExam" class="panel" role="tabpanel">
+  <h1 class="section-title"><span>AI-Generated</span>Exam Prep</h1>
+
+  <div class="exam-intro">
+    <strong>How it works:</strong> Select one or more topics below (or leave all unselected for a mixed scenario), then click <strong>Generate Scenario</strong>. The AI will create a realistic exam-style scenario with marked questions — modelled directly off your practice exam format. Write your answer and click <strong>Submit for Marking</strong> to get detailed feedback against the marking criteria.
+  </div>
+
+  <div class="topic-grid" id="topicGrid">
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Intro to Law & Policy">Intro to Law &amp; Policy</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Human Rights Law">Human Rights Law</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Professionalism & Ethics">Professionalism &amp; Ethics</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Adult Capacity & Consent">Adult Capacity &amp; Consent</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Child Capacity & Gillick Competence">Child Capacity</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Confidentiality & Privacy">Confidentiality &amp; Privacy</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Negligence">Negligence</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Patient Safety & Open Disclosure">Patient Safety</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Termination of Pregnancy">Termination of Pregnancy</button>
+    <button class="topic-chip" onclick="toggleTopic(this)" data-topic="Bioethical Principles">Bioethical Principles</button>
+  </div>
+
+  <div class="gen-bar">
+    <button class="gen-btn" id="genBtn" onclick="generateScenario()">⚡ Generate Scenario</button>
+    <span class="gen-label" id="genLabel">Ready to generate</span>
+  </div>
+
+  <div id="scenarioArea">
+    <div class="exam-empty">
+      <div class="empty-icon">📋</div>
+      <p>Your practice scenario will appear here.<br>Select topics above and click Generate.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ══════════════════════════════════════════
+  //  TAB SWITCHING
+  // ══════════════════════════════════════════
+  function showTab(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = doc.scrollHeight > doc.clientHeight
+      ? (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100 : 0;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  // ══════════════════════════════════════════
+  //  SHARED SYSTEM PROMPT
+  // ══════════════════════════════════════════
+  const SYSTEM_PROMPT = `You are an expert CMPP1 (Clinical Medicine, Policy and Practice) tutor for a medical student at a Queensland university preparing for their mid-semester exam.
+
+CMPP1 notes content:
+1. Intro to Law and Policy — 2 sources of law (statutory/common), criminal vs civil, Australia only liberal democracy without bill of rights, Commonwealth Constitution Act, rights from international treaties and case law, local councils delegated by states, QLD only 1 lower house, 3 readings before royal assent, health policy by governments, hospital policies vs law, courts assume infinite resources, rationing (PBS/beds), doctrine of precedent, civil (plaintiff vs defendant) vs criminal (prosecutor vs accused), AHPRA, Medical Board of Australia, QLD Office of Health Ombudsman
+2. Human Rights Law — codified in conventions/covenants, ratifying = voluntary legal obligation, little consequence for non-compliance, not binding in Australia until incorporated into domestic law, nothing in Constitution guarantees human rights broadly, QLD Human Rights Act 2019: right to health services without discrimination, cannot refuse emergency medical treatment immediately necessary to save life; right to health = highest attainable standard physical/mental health, includes nutrition/sanitation/education/shelter/water/housing, different to right to BE healthy or right TO healthcare
+3. Professionalism — intrinsic values (respect, care, responsibility, accountability, self-awareness, integrity, clinical competence) expressed as extrinsic behaviours, justifies trust, MBA Code of Conduct: Good Medical Practice Guide
+4. Ethics — Virtue Ethics (virtuous traits, honest person example), limitations (define virtuous person, not all virtuous, consistency); Deontology (act intrinsically right/wrong, good will), limitations (consequences irrelevant, individualistic, limited capacity, no context/consequences, no experiential understanding); Utilitarianism (greatest good, consequentialist/teleological, equal happiness), limitations (disregard individual rights, disadvantages minorities, unintended consequences); Bioethical principles: autonomy, beneficence, non-maleficence, justice — may conflict; Types of justice: distributive (resources), rights-based (patient rights), legal (accountable to just laws); Limitations of bioethics: assumes doctor decides, principal confliction; AMA code of ethics for behavioural standards
+5. Adult Capacity — informed consent = voluntary decision with knowledge of benefits/risks; good medical practice: inform, obtain consent, fees, investigative costs; consent required all adults/children, body inviolate, autonomy; valid consent: written/verbal/implied, documented; 3 parts: (1) capacity, (2) freely/voluntarily — firm advice not undue influence, (3) sufficient specificity — nature AND purpose; 18+ presumption of capacity rebuttable; capacity by legislation: understand nature/effect, freely/voluntarily decide, communicate; capacity by common law: understand/retain/believe/weigh/communicate; must inform: nature/purpose/broad requirements/specific risks/benefits/alternatives/costs; right to refuse life-sustaining treatment; pregnant women right to refuse; mental health act cannot detain merely for unusual thinking; doctor not required to provide non-clinically indicated treatment but offer second opinion; capacity for A not B; SDM hierarchy QLD: AHD → enduring POA → statutory health attorney → QCAT guardian → public guardian; AHD: plan future care when capacity lost, can leave wishes/directions/appoint attorney, signed by adult/eligible witness/doctor, operates ONLY when capacity lost, can revoke/make new, provider not affected if unaware, can override if uncertain/inconsistent/medical advances; QCAT: appoints guardians; EPA: multiple = joint unless stated, must consult regularly, unanimous unless document says otherwise, disagreement = public guardian; statutory health attorney order: spouse > >18 carer not paid > >18 close friend/relative not paid > public guardian; SDMs need info on: condition/form of healthcare/reasons/alternatives/nature+effect of each/significant risks; principles: presumption capacity, human rights, empower, maintain relationships, privacy, maximise participation, safeguard best interests; healthcare principles: non-discrimination, dignity/worth/autonomy; no consent = unlawful unless urgent or minor/uncontroversial; special healthcare + ECT need court; treatment without consent permitted: impaired capacity + urgent imminent risk to life or prevent significant pain/distress + not practicable to get SDM; CANNOT do if: AHD objection known, adult objects (unless minimal understanding), must document; Good Samaritan: good faith, no gross negligence, no fee; decisions only by adult/court: tissue donation/sterilisation/ToP/medical research; benevolent paternalism
+6. Child Capacity — presumed NO capacity, parents make decisions in best interests; one parent for routine unless court order for joint or special medical procedure; parents disagree → family court → best interests; parents cannot consent to sterilisation as primary purpose; special medical procedure: invasive/irreversible, significant risk wrong decision, consequences particularly grave, conflicting interests; courts can overrule parental refusal; blood transfusion: no criminal liability even if parent refused IF necessary to preserve life AND second practitioner agrees; Gillick: sufficient understanding and intelligence to understand fully what is proposed, case-by-case; assessment: understand nature, explain back, insight into best interests, understand risks/benefits, considered alternatives, all aspects of care, maturity/autonomy in life — if in doubt NOT competent; even non-Gillick: dignity and right to information respected; Gillick competent CANNOT refuse treatment in best interests including life-saving
+7. Confidentiality — ANYTHING between you and patient is confidential; lawful disclosure: care/treatment, patient consent, risk to public, law requires; person with sufficient interest: close relative/friend/home carer/GP — NOT if expressly told not to; persists after death; public interest: chief executive authorises in writing, imminent serious harm only, appropriate authority, most compelling circumstances; APPs (private) vs QPPs (public); personal info = reasonably identifiable; sensitive info = racial/political/sexual/criminal/biometric; privacy tort: intrusion upon seclusion OR misuse; genetic info: obtained in health service + serious threat to life/health of genetic relative + lawful + no further than 3rd degree
+8. Negligence — 4 elements: duty of care, standard+breach, harm+causation, damages — ALL 4, within 3 years; direct duty: doctor/patient, nurse/patient, hospital+ambulance/patient; vicarious liability; hospital: non-delegable duty; standard: reasonable competent doctor same circumstances; risk foreseeable, not insignificant, burden of precautions; no breach if widely accepted by peer professional opinion UNLESS contradicts written law OR irrational; duty to inform ALL material risks; material risk: reasonable person would attach significance; no liability for inherent risk; harm: causally connected; damages = degree of harm NOT negligence; defences: contributory negligence, voluntary assumption of risk, Good Samaritan, employer indemnity; criminal negligence rare
+9. Patient Safety — adverse event: unexpected/undesired, from management, sentinel = preventable; person vs systems approach; NSQHS; open disclosure: apology, factual explanation, patient/family relay experience, potential consequences, steps being taken; apology ≠ admission of fault, not admissible in civil proceedings
+10. Termination of Pregnancy — self-consent no offence; ≤22 weeks by medical practitioner; >22 weeks: two practitioners agree + all circumstances; emergency: save life; conscientious objection: must disclose not why, must refer, no limit in emergency; no consent from biological father, no legal right to prevent/force; QCAT/Supreme Court for adults with impaired capacity; safe access zones 150m
+
+EXAM FORMAT KNOWLEDGE (from practice exam):
+- Scenarios involve realistic patients with names and clinical situations set in Queensland
+- Questions use phrases like "Detail and apply the relevant law", "Apply the elements of", "Explain the extent to which"
+- Mark allocations indicate number of bullet points needed (10 marks = ~10 distinct points)
+- Dot points are acceptable
+- Questions often combine: (a) a law/capacity question + (b) an ethics/human rights question
+- Good answers: identify the legal framework → apply it to the facts → reach a conclusion
+- For negligence: work through each element with reference to the specific facts
+- For SDM/capacity: identify loss of capacity → work through the hierarchy → apply principles
+- For bioethics: address each of the 4 principles in turn with application to the scenario
+- For human rights: distinguish right to health vs right to healthcare, note international vs domestic enforceability`;
+
+  const MARKING_SYSTEM = `You are marking a CMPP1 exam answer from a Queensland medical student.
+
+MARKING APPROACH (modelled on official practice exam marking guide):
+- Award marks for each distinct correct legal/ethical point made
+- Each mark = one correct, specific, applicable point
+- Reward application of law TO THE FACTS, not just general statements
+- Award part marks for partially correct answers
+- Be constructive — identify what was missed and explain why it matters
+- Reference specific rules, legislation, or principles from the notes
+- Model answer format: score line, then bullet points of what was done well, then what was missed, then key points they should have included
+
+KNOWN MARKING PATTERNS:
+- For SDM questions: expect hierarchy identification + application to specific facts + principles
+- For negligence: expect each element addressed + application to facts + conclusion
+- For bioethics: expect each of 4 principles addressed + application
+- For human rights: expect international vs domestic distinction + QLD HRA specifics
+- For consent/capacity: expect definition + elements + application
+- Always check: did they apply the law to the facts, or just state it abstractly?`;
+
+  // ══════════════════════════════════════════
+  //  FORMAT HELPER
+  // ══════════════════════════════════════════
+  function formatResponse(text) {
+    text = text.replace(/\[FROM NOTES\]/gi, '<span class="src-notes">📚 From Your Notes</span>');
+    text = text.replace(/\[FROM WEB\]/gi,   '<span class="src-web">🌐 Found Online</span>');
+    text = text.replace(/\[NOTES\]/gi,      '<span class="src-notes">📚 From Your Notes</span>');
+    text = text.replace(/\[WEB\]/gi,        '<span class="src-web">🌐 Found Online</span>');
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*([^*]+?)\*/g,  '<em>$1</em>');
+    text = text.replace(/^### (.+)$/gm, '<strong style="display:block;margin-top:10px;color:var(--rust)">$1</strong>');
+    text = text.replace(/^## (.+)$/gm,  '<strong style="display:block;margin-top:12px;font-size:1.02em">$1</strong>');
+    const lines = text.split('\n');
+    let out = '', inList = false;
+    for (let line of lines) {
+      const bullet = line.match(/^[-•*] (.+)/);
+      const numbered = line.match(/^\d+\. (.+)/);
+      if (bullet) {
+        if (!inList) { out += '<ul style="padding-left:16px;margin:6px 0">'; inList = 'ul'; }
+        out += `<li style="list-style:disc;padding:0;margin-bottom:3px">${bullet[1]}</li>`;
+      } else if (numbered) {
+        if (!inList) { out += '<ol style="padding-left:16px;margin:6px 0">'; inList = 'ol'; }
+        out += `<li style="padding:0;margin-bottom:3px">${numbered[1]}</li>`;
+      } else {
+        if (inList) { out += inList === 'ul' ? '</ul>' : '</ol>'; inList = false; }
+        if (line.trim()) out += `<p style="margin-bottom:5px">${line}</p>`;
+      }
+    }
+    if (inList) out += inList === 'ul' ? '</ul>' : '</ol>';
+    return out;
+  }
+
+  async function streamToElement(messages, targetEl, systemOverride, onDone) {
+    const sys = systemOverride || SYSTEM_PROMPT;
+    let fullText = '';
+    targetEl.innerHTML = '<span class="stream-cursor">▍</span>';
+    try {
+      const resp = await fetch('/api/claude', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1400,
+          stream: true,
+          system: sys,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          messages
+        })
+      });
+      if (!resp.ok) {
+        const err = await resp.json();
+        targetEl.innerHTML = `<em style="color:var(--red-note)">Error: ${err.error?.message || resp.statusText}</em>`;
+        if (onDone) onDone(null); return;
+      }
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n');
+        buf = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(data);
+            if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+              fullText += evt.delta.text;
+              targetEl.innerHTML = formatResponse(fullText) + '<span class="stream-cursor">▍</span>';
+              targetEl.closest('.float-msgs, .feedback-box')?.scrollTo?.({ top: 99999, behavior: 'smooth' });
+              window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+            }
+          } catch {}
+        }
+      }
+      targetEl.innerHTML = formatResponse(fullText);
+      if (onDone) onDone(fullText);
+    } catch (err) {
+      targetEl.innerHTML = `<em style="color:var(--red-note)">Connection error: ${err.message}</em>`;
+      if (onDone) onDone(null);
+    }
+  }
+
+  // ══════════════════════════════════════════
+  //  FLOATING CHATBOT
+  // ══════════════════════════════════════════
+  let floatHistory = [];
+  let floatBusy = false;
+
+  function toggleFloat() {
+    const chat = document.getElementById('floatChat');
+    const btn  = document.getElementById('floatToggle');
+    const open = chat.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    if (open) document.getElementById('floatInput').focus();
+  }
+  function clearFloat() {
+    floatHistory = [];
+    document.getElementById('floatMsgs').innerHTML = `<div class="float-msg ai"><div class="fl-label">CMPP Tutor</div><div class="fl-body">Chat cleared. Ask me anything!</div></div>`;
+  }
+  function floatKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); floatSend(); }
+  }
+  function floatSend() {
+    if (floatBusy) return;
+    const input = document.getElementById('floatInput');
+    const text  = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    floatBusy = true;
+    document.getElementById('floatSendBtn').disabled = true;
+    const msgs = document.getElementById('floatMsgs');
+    const userDiv = document.createElement('div');
+    userDiv.className = 'float-msg user';
+    userDiv.innerHTML = `<div class="fl-label">You</div><div class="fl-body">${text.replace(/</g,'&lt;')}</div>`;
+    msgs.appendChild(userDiv);
+    const aiDiv = document.createElement('div');
+    aiDiv.className = 'float-msg ai';
+    aiDiv.innerHTML = `<div class="fl-label">CMPP Tutor</div><div class="fl-body" id="floatStream"></div>`;
+    msgs.appendChild(aiDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+    floatHistory.push({ role: 'user', content: text });
+    streamToElement(floatHistory, document.getElementById('floatStream'), null, (result) => {
+      if (result) floatHistory.push({ role: 'assistant', content: result });
+      floatBusy = false;
+      document.getElementById('floatSendBtn').disabled = false;
+      document.getElementById('floatInput').focus();
+    });
+  }
+
+  // ══════════════════════════════════════════
+  //  EXAM PREP — complete rewrite
+  // ══════════════════════════════════════════
+
+  // Single state object — no inline data passing, no regex fragility
+  const examState = {
+    busy: false,
+    topics: [],
+    // After generation, store the raw sections here
+    scenario: '',
+    qa: { question: '', guide: '', marks: 10 },
+    qb: { question: '', guide: '', marks:  5 },
+  };
+
+  function toggleTopic(el) {
+    const t = el.dataset.topic;
+    if (el.classList.toggle('selected')) examState.topics.push(t);
+    else examState.topics = examState.topics.filter(x => x !== t);
+  }
+
+  // ── GENERATE ──────────────────────────────
+  async function generateScenario() {
+    if (examState.busy) return;
+    examState.busy = true;
+
+    const btn   = document.getElementById('genBtn');
+    const label = document.getElementById('genLabel');
+    const area  = document.getElementById('scenarioArea');
+    btn.disabled = true;
+    label.textContent = 'Generating…';
+
+    // Show a live streaming preview while the AI writes
+    area.innerHTML = `
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="sc-title">Generating…</span>
+          <span class="sc-marks">streaming</span>
+        </div>
+        <div class="scenario-body">
+          <div id="genStream" style="font-size:0.9rem;line-height:1.8;color:var(--ink-light);white-space:pre-wrap;min-height:80px"></div>
+        </div>
+      </div>`;
+
+    const topicStr = examState.topics.length
+      ? `Focus on: ${examState.topics.join(', ')}.`
+      : 'Pick a random mix of topics from the syllabus.';
+
+    const prompt = `You are generating a CMPP1 practice exam scenario for a Queensland medical student.
+
+${topicStr}
+
+Output EXACTLY the following sections with EXACTLY these headers on their own lines. Do not add any extra text before SCENARIO.
+
+SCENARIO
+Write a detailed 300-400 word clinical scenario across 3-4 paragraphs set in Queensland. Use named characters. Build progressively: introduce patient/context, develop complexity (new characters, changing status, conflicting interests), arrive at the legal/ethical crux in the final paragraph.
+
+QUESTION_A
+Write one exam question (7-10 marks) using language like "Detail and apply the relevant law to determine..." or "Apply the elements of... to this case." Include the mark value in brackets at the end e.g. (8 marks).
+
+GUIDE_A
+List the marking guide for Question A. Write one bullet point per mark. Each bullet = one distinct legal point the student must make, applied to the specific facts.
+
+QUESTION_B
+Write a second exam question (3-5 marks) on a related or contrasting topic. Include mark value in brackets.
+
+GUIDE_B
+List the marking guide for Question B. One bullet per mark.`;
+
+    let raw = '';
+    const streamEl = document.getElementById('genStream');
+
+    try {
+      const resp = await fetch('/api/claude', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          stream: true,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!resp.ok) {
+        const e = await resp.json();
+        area.innerHTML = `<div class="exam-empty"><p style="color:var(--red-note)">API error: ${e.error?.message || resp.statusText}</p></div>`;
+        examState.busy = false; btn.disabled = false; label.textContent = 'Try again';
+        return;
+      }
+
+      const reader  = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n'); buf = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const d = line.slice(6).trim();
+          if (d === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(d);
+            if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+              raw += evt.delta.text;
+              streamEl.textContent = raw;
+            }
+          } catch {}
+        }
+      }
+    } catch (err) {
+      area.innerHTML = `<div class="exam-empty"><p style="color:var(--red-note)">Connection error: ${err.message}</p></div>`;
+      examState.busy = false; btn.disabled = false; label.textContent = 'Try again';
+      return;
+    }
+
+    // ── Parse the raw output using simple header splitting ──────────
+    function extractSection(text, header) {
+      const headers = ['SCENARIO','QUESTION_A','GUIDE_A','QUESTION_B','GUIDE_B'];
+      const idx = text.indexOf('\n' + header + '\n');
+      if (idx === -1) return '';
+      const start = idx + header.length + 2;
+      // Find the next header
+      let end = text.length;
+      for (const h of headers) {
+        if (h === header) continue;
+        const ni = text.indexOf('\n' + h + '\n', start);
+        if (ni !== -1 && ni < end) end = ni;
+      }
+      return text.slice(start, end).trim();
+    }
+
+    // Prepend newline so indexOf can find headers at position 0 too
+    const t = '\n' + raw;
+    examState.scenario = extractSection(t, 'SCENARIO');
+    examState.qa.question = extractSection(t, 'QUESTION_A');
+    examState.qb.question = extractSection(t, 'QUESTION_B');
+    examState.qa.guide    = extractSection(t, 'GUIDE_A');
+    examState.qb.guide    = extractSection(t, 'GUIDE_B');
+
+    // Parse marks from question text e.g. "(8 marks)"
+    const mA = examState.qa.question.match(/\((\d+)\s*marks?\)/i);
+    const mB = examState.qb.question.match(/\((\d+)\s*marks?\)/i);
+    examState.qa.marks = mA ? parseInt(mA[1]) : 10;
+    examState.qb.marks = mB ? parseInt(mB[1]) :  5;
+
+    renderScenarioCard();
+    examState.busy = false;
+    btn.disabled = false;
+    label.textContent = 'Generate another?';
+  }
+
+  // ── RENDER ────────────────────────────────
+  function renderScenarioCard() {
+    const area = document.getElementById('scenarioArea');
+    area.innerHTML = `
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <span class="sc-title">Practice Scenario</span>
+          <span class="sc-marks">CMPP1 Exam Format</span>
+        </div>
+        <div class="scenario-body">
+
+          <div class="scenario-text" id="examScenarioText"></div>
+
+          <div class="question-block">
+            <div class="question-text" id="examQaText"></div>
+            <textarea class="answer-area" id="examAnswerA" placeholder="Write your answer here…"></textarea>
+            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+              <button class="submit-btn" id="submitBtnA">Submit for Marking</button>
+              <button class="reveal-btn" id="revealBtnA">Reveal Model Answer</button>
+            </div>
+            <div class="feedback-box" id="feedbackA"></div>
+            <div class="feedback-box" id="guideA"></div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text" id="examQbText"></div>
+            <textarea class="answer-area" id="examAnswerB" placeholder="Write your answer here…"></textarea>
+            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+              <button class="submit-btn" id="submitBtnB">Submit for Marking</button>
+              <button class="reveal-btn" id="revealBtnB">Reveal Model Answer</button>
+            </div>
+            <div class="feedback-box" id="feedbackB"></div>
+            <div class="feedback-box" id="guideB"></div>
+          </div>
+
+        </div>
+      </div>`;
+
+    // Populate text content safely (no innerHTML injection)
+    document.getElementById('examScenarioText').textContent = examState.scenario;
+    document.getElementById('examQaText').textContent = '(a) ' + examState.qa.question;
+    document.getElementById('examQbText').textContent = '(b) ' + examState.qb.question;
+
+    // Attach event listeners directly — zero inline onclick, zero string escaping
+    document.getElementById('submitBtnA').addEventListener('click', () => doMark('A'));
+    document.getElementById('submitBtnB').addEventListener('click', () => doMark('B'));
+    document.getElementById('revealBtnA').addEventListener('click', () => doReveal('A'));
+    document.getElementById('revealBtnB').addEventListener('click', () => doReveal('B'));
+  }
+
+  // ── MARK ──────────────────────────────────
+  async function doMark(which) {
+    const qData  = which === 'A' ? examState.qa : examState.qb;
+    const answer = document.getElementById('examAnswer' + which).value.trim();
+    if (!answer) { alert('Please write an answer first.'); return; }
+
+    const fb = document.getElementById('feedback' + which);
+    fb.classList.add('visible');
+    fb.innerHTML = '<span class="stream-cursor">▍</span>';
+
+    const markPrompt = `Mark this CMPP1 exam answer. Be strict but fair.
+
+SCENARIO:
+${examState.scenario}
+
+QUESTION (${qData.marks} marks):
+${qData.question}
+
+MARKING GUIDE:
+${qData.guide}
+
+STUDENT ANSWER:
+${answer}
+
+Reply in this exact format:
+
+**Score: X / ${qData.marks}**
+
+**What you got right:**
+- [bullet per correct point with the specific legal rule/principle named]
+
+**What you missed:**
+- [bullet per marking guide point the student did not address]
+
+**How to reach full marks:**
+- [specific actionable tips tied to this scenario — e.g. "You identified the duty of care but didn't apply the reasonable doctor standard to the specific facts"]
+
+One mark per distinct correct point from the marking guide. Be precise.`;
+
+    await streamToElement([{ role: 'user', content: markPrompt }], fb, MARKING_SYSTEM, null);
+  }
+
+  // ── REVEAL ────────────────────────────────
+  function doReveal(which) {
+    const qData = which === 'A' ? examState.qa : examState.qb;
+    const guide = document.getElementById('guide' + which);
+    guide.classList.add('visible');
+    guide.innerHTML = '<div class="score-line">📋 Model Answer / Marking Guide</div>'
+      + (qData.guide
+          ? formatResponse(qData.guide)
+          : '<em style="color:var(--brown-light)">No guide captured — please regenerate.</em>');
+    guide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // blink cursor
+  const blinkStyle = document.createElement('style');
+  blinkStyle.textContent = `
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .stream-cursor { color:var(--gold); animation:blink 0.8s infinite; }
+  `;
+  document.head.appendChild(blinkStyle);
+</script>
+</body>
+</html>
